@@ -1,13 +1,10 @@
 'use strict';
+a = 5;
+console.log(a);
 
-alert('соси бибу');
+a++;
+console.log(a);
 
-let result = confirm('you gay');
+var a = 10;
 
-console.log(result);
-
-let result2 = prompt('how old are you?', '11');
-
-console.log(result2);
-
-document.write('result2');
+console.log(a);
