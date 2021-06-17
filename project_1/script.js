@@ -10,12 +10,28 @@ let personalMovieDB = {
     private: false
 };
 
-let movie = prompt('Последний просмотренный фильм:', '');
+for (let i = 0; i < 2; i++) {
+    let movie = prompt('Последний просмотренный фильм:', '');
+    console.log(movie);
+    if (movie === '' || movie == null  || movie.length > 50) {
+        i--;
+        continue;
+    }
+    let mark;
+    do {
+        mark = prompt('На сколько вы оцение его?', '');
+    } while (mark === '' || mark == null);
+    personalMovieDB.movies[movie] = +mark;
+} 
 
-personalMovieDB.movies[movie] = +prompt('На сколько вы оцение его?', '');
-
-movie = prompt('Последний просмотренный фильм:', '');
-
-personalMovieDB.movies[movie] = +prompt('На сколько вы оцение его?', '');
+if (personalMovieDB.count < 10) {
+    alert('Мало фильмов');
+} else if (personalMovieDB.count < 30) {
+    alert('Вы классический зритель')
+} else if (personalMovieDB.count >= 30) {
+    alert('Вы киноман!');
+} else {
+    alert('Произошла ошибка');
+}
 
 console.log(personalMovieDB);
