@@ -1,44 +1,26 @@
 'use strict';
 
-let num = 50;
-
-(num === 60) ? (
-    console.log('ok!'),
-    num = 50
-) : (num === 50) ? (
-    console.log('не оk!'),
-    num = 60
-) : (
-    console.log('nuuu hz')
-);
-
-// то же самое, что и 
-if (num === 60) {
-    console.log('ok!');
-} else {
-    console.log('не ok!');
+function first() {
+    //Do something
+    setTimeout(function() {
+        console.log(1);
+    }, 500);
 }
 
-num = 50;
-
-//switch проверяет на строгое равенство (num === 50)
-switch (num) {
-    case 50:
-        console.log('very ok!');
-        break;
-    case 60:
-        console.log('not seems so good');
-        break;
-    default:
-        console.log('idkhbtfm');
+function second() {
+    console.log(2);
 }
 
-let number = 50;
+first();
+second();
 
-while (number < 55) {
-    console.log(++number);
+function learnJS(lang, callback) {
+    console.log(`Я учу: ${lang}`);
+    callback();
 }
 
-for (let i = 1; i < 8; i++) {
-    console.log(i);
+function done() {
+    console.log('I\'ve done with this lesson');
 }
+
+learnJS('javascript', done);
