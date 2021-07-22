@@ -1,74 +1,36 @@
-'use strict';
+'use  strict';
 
-let a = [3, 4, 5],
-    b = a;
-
-b[2] = 3;
-
-console.log(a);
-console.log(b);
-
-
-function copy(mainObj) {
-    let objCopy = {};
-    for (let key in mainObj) {
-        objCopy[key] = mainObj[key];
-    }
-    return objCopy;
-}
-
-const numbers = {
-    a: 2,
-    b: 5,
-    c: {
-        x: 7,
-        y: 4
+let soldier = {
+    health: 400,
+    armor: 100,
+    sayHello: () => {
+        console.log('Hello!');
+    },
+    someShit: {
+        x: 10,
+        y: 20
     }
 };
 
-// const newNumbers = copy(numbers);
-// newNumbers['c']['x'] = 2;
+const john = Object.create(soldier);
 
-// console.log(newNumbers);
-// console.log(numbers);
+// const john = {
+//     health: 100
+// };
 
-const add = {
-    d: 17,
-    e: 20
-};
+// john.__proto__ = soldier; // __proto__ - deprecated, устаревшее свойство
 
-console.log(Object.assign(numbers, add));//assign соединяет два объекта
+Object.setPrototypeOf(john, soldier); //аналогично предыдущей записи с __proto__
 
-let clone = Object.assign({}, add);
+john.sayHello();
 
-clone.d = 2;
+console.log(john.armor);
 
-console.log(add);
-console.log(clone);
+console.log(john.health);
 
-let oldArray = ['a', 'b', 'c'];
-let newArray = oldArray.slice();
+john.health = 200;
 
-newArray[1] = 'asasdasd';
-console.log(oldArray);
-console.log(newArray);
+john.someShit.x = 345;
 
-
-let video = ['youtube', 'vimeo', 'rutube'],
-    blogs = ['wordpress', 'livejournal', 'blogger'],
-    internet = [...video, ...blogs, 'vk'];
-
-
-// многоточие ... это spread оператор
-
-console.log(internet);
-
-function log(a, b, c) {
-    console.log(a);
-    console.log(b);
-    console.log(c);
-}
-
-const num = [2, 5, 7];
-
-log(...num);
+console.log(soldier);
+console.log(john);
