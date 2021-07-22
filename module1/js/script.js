@@ -1,36 +1,35 @@
-'use  strict';
+'use strict';
 
-let soldier = {
-    health: 400,
-    armor: 100,
-    sayHello: () => {
-        console.log('Hello!');
-    },
-    someShit: {
-        x: 10,
-        y: 20
-    }
-};
+// to  String
 
-const john = Object.create(soldier);
+// 1) Устаревший формат
+console.log(typeof(String(null)));
+console.log(typeof(String(4)));
 
-// const john = {
-//     health: 100
-// };
+// 2) Конкатенация
+console.log(typeof(5 + ''));
 
-// john.__proto__ = soldier; // __proto__ - deprecated, устаревшее свойство
 
-Object.setPrototypeOf(john, soldier); //аналогично предыдущей записи с __proto__
+// to Number
 
-john.sayHello();
+// 1)Устаревший
+console.log(typeof(Number('4')));
 
-console.log(john.armor);
+// 2) Унарный плюс
+console.log(typeof(+'5'));
 
-console.log(john.health);
+// 3) parseInt берет первое попавшееся число в строке в 10 системе счисления
+console.log(parseInt('15px', 10));
 
-john.health = 200;
 
-john.someShit.x = 345;
+// to Boolean
 
-console.log(soldier);
-console.log(john);
+// 0, '', null, undefined, NaN - все это равняется false
+
+// 1) Устаревший
+console.log(typeof(Boolean('4')));
+
+// 2) Два знака отрицания
+console.log(typeof(!!'44444'));
+
+console.log(1 && 2);
