@@ -1,32 +1,74 @@
 'use strict';
 
-let options = {
-    name: 'test',
-    width: 1024,
-    height: 1024,
-    colors: {
-        border: 'black',
-        bg: 'red'
+let a = [3, 4, 5],
+    b = a;
+
+b[2] = 3;
+
+console.log(a);
+console.log(b);
+
+
+function copy(mainObj) {
+    let objCopy = {};
+    for (let key in mainObj) {
+        objCopy[key] = mainObj[key];
+    }
+    return objCopy;
+}
+
+const numbers = {
+    a: 2,
+    b: 5,
+    c: {
+        x: 7,
+        y: 4
     }
 };
 
-console.log(Object.keys(options['colors']));
+// const newNumbers = copy(numbers);
+// newNumbers['c']['x'] = 2;
 
-const {border, bg} = options.colors;
+// console.log(newNumbers);
+// console.log(numbers);
 
-console.log(bg);
-// console.log(options.name);
+const add = {
+    d: 17,
+    e: 20
+};
 
-// delete options.name;
+console.log(Object.assign(numbers, add));//assign соединяет два объекта
 
-// console.log(options);
+let clone = Object.assign({}, add);
 
-for (let key in options) {
-    if (typeof(options[key]) == 'object') {
-        for (let i in options[key]) {
-            console.log(`Свойство ${i} имеет значение ${options[key][i]} `);
-        }
-    } else {
-        console.log(`Свойство ${key} имеет значение ${options[key]} `);
-    }
+clone.d = 2;
+
+console.log(add);
+console.log(clone);
+
+let oldArray = ['a', 'b', 'c'];
+let newArray = oldArray.slice();
+
+newArray[1] = 'asasdasd';
+console.log(oldArray);
+console.log(newArray);
+
+
+let video = ['youtube', 'vimeo', 'rutube'],
+    blogs = ['wordpress', 'livejournal', 'blogger'],
+    internet = [...video, ...blogs, 'vk'];
+
+
+// многоточие ... это spread оператор
+
+console.log(internet);
+
+function log(a, b, c) {
+    console.log(a);
+    console.log(b);
+    console.log(c);
 }
+
+const num = [2, 5, 7];
+
+log(...num);
