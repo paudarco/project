@@ -1,35 +1,71 @@
 'use strict';
 
-// to  String
+const heading = document.querySelector('h1');
 
-// 1) Устаревший формат
-console.log(typeof(String(null)));
-console.log(typeof(String(4)));
+// Создаем тег div и помещаем его в переменную
+const div = document.createElement('div');
 
-// 2) Конкатенация
-console.log(typeof(5 + ''));
+// заставляем div отобразиться в конце блока body
+document.body.append(div);
+
+// добавляем диву классы black и kick
+div.classList.add('black', 'kick');
+
+const btn = document.createElement('button');
+
+// создаем текст
+const text = document.createTextNode('Нажми');
+
+// заставляем кнопку отобразиться в конце блока div
+document.querySelector('div').append(btn);
+
+// добавляем кнопке некоторые инлайн стили 
+btn.style.cssText = 'width: 200px; height: 200px; border-radius: 100px;';
+
+// добавляем текст в конец кнопки (можно обойтись и без createTextNode)
+document.querySelector('button').append(document.createTextNode('ya sosal'));
+
+// добавляем тот же div в начало body. причем prepend и append работают только с одним элементом и не создают копий
+document.body.prepend(div);
+
+// работают аналогично с append и prepend, только добавляют не вовнутрь, а рядом (после или перед)
+heading.after(div);
+heading.before(div);
+
+// если хотим удалить элемент со страницы, то есть remove. работает со всеми элементами, а не только из js
+// div.remove();
 
 
-// to Number
+const lorem = document.createElement('h2');
 
-// 1)Устаревший
-console.log(typeof(Number('4')));
+lorem.style.cssText = 'font-size: 30px; font-family: Calibri; color: red;';
 
-// 2) Унарный плюс
-console.log(typeof(+'5'));
+document.body.append(lorem);
 
-// 3) parseInt берет первое попавшееся число в строке в 10 системе счисления
-console.log(parseInt('15px', 10));
+document.querySelector('h2').append('Я такой сильный, что сейчас наложу себе в штаны!');
+
+// replaceWith - чтобы заменить один элемент другим (а не поменять местами!). 
+// btn - то, что хотим заменить, а Lorem - то, на что хотим заменить
+// btn.replaceWith(lorem);
 
 
-// to Boolean
 
-// 0, '', null, undefined, NaN - все это равняется false
+const div2 = document.createElement('div');
 
-// 1) Устаревший
-console.log(typeof(Boolean('4')));
+document.body.append(div2);
+div2.classList.add('how');
+div2.style.cssText = 'background-color: black; width: 200px; height: 100px; color: white; text-align: center; display:table-cell;';
 
-// 2) Два знака отрицания
-console.log(typeof(!!'44444'));
+// чтобы добавить какой то код внутрь блока, используем innerHTML
+div2.innerHTML = '<h1 style="vertical-align: middle;">я тебя люблю</h1>';
 
-console.log(1 && 2);
+// если нужен только текст, то textContent. при этом innerHTML отключается
+// div2.textContent = 'пошел нахуй';\
+
+// "вставить смежный html" вставляет в нужное место div2 какой-то html код
+// beforebegin, afterbegin, beforeend, afterend
+div2.insertAdjacentHTML('beforebegin', '<h1>где моя рыба?</h1>');
+
+div2.getElementsByTagName('h1')[0].style.color = 'wheat';
+
+
