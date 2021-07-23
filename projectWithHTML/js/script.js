@@ -44,6 +44,11 @@ poster.style.backgroundImage = "url('img/bg.jpg')";
 moviesList.querySelectorAll('li').forEach(item => item.remove());
 
 movieDB.movies.sort().forEach((film, key) => {
-    moviesList.insertAdjacentHTML('beforeend', `<li class='promo__interactive-item'>${key + 1}. ${film}</li>`);
+    moviesList.insertAdjacentHTML('beforeend', `
+        <li class='promo__interactive-item'>
+            ${key + 1}. ${film} 
+            <div class="delete"></div>
+        </li>
+    `);
 });
 
