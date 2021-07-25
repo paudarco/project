@@ -1,54 +1,88 @@
-/* Задания на урок:
-
-1) Удалить все рекламные блоки со страницы (правая часть сайта)
-
-2) Изменить жанр фильма, поменять "комедия" на "драма"
-
-3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
-Реализовать только при помощи JS
-
-4) Список фильмов на странице сформировать на основании данных из этого JS файла.
-Отсортировать их по алфавиту 
-
-5) Добавить нумерацию выведенных фильмов */
-
 'use strict';
 
-const movieDB = {
-    movies: [
-        "Логан",
-        "Лига справедливости",
-        "Ла-ла лэнд",
-        "Одержимость",
-        "Скотт Пилигрим против..."
-    ]
-};
+document.addEventListener('DOMContentLoaded', () => {
+    const movieDB = {
+        movies: [
+            "Логан",
+            "Лига справедливости",
+            "Ла-ла лэнд",
+            "Одержимость",
+            "Скотт Пилигрим против..."
+        ]
+    };
+    
+    const ad = document.querySelectorAll('.promo__adv img'),
+          poster = document.querySelector('.promo__bg'),
+          genre = poster.querySelector('.promo__genre'),
+          moviesList = document.querySelector('.promo__interactive-list'),
+          addBlock = document.querySelector('form.add'),
+          addInput = addBlock.querySelector('.adding__input'),
+          isFavorite = addBlock.querySelector('[type="checkbox"]');
+        //   deleteBtns = moviesList.querySelectorAll('.delete');
+    
+    const deleteAdv = (arr) => {
+        arr.forEach(item => item.remove());
+    };
 
-// movieDB.movies.sort();
 
-const ad = document.querySelectorAll('.promo__adv img'),
-      poster = document.querySelector('.promo__bg'),
-      genre = poster.querySelector('.promo__genre'),
-      moviesList = document.querySelector('.promo__interactive-list');
+    const makeChanges = () => {
+        genre.textContent = 'Драма';
+        poster.style.backgroundImage = "url('img/bg.jpg')";
+    };
 
-// 1)
-ad.forEach(item => item.remove());
+    const sortArr = (arr) => {
+        arr.sort();
+    };
+    
+    function loadMovies(films, parent) {
+        parent.innerHTML = '';
+        films.sort().forEach((film, key) => {
+            parent.insertAdjacentHTML('beforeend', `
+                <li class='promo__interactive-item'>
+                    ${key + 1}. ${film} 
+                    <div class="delete"></div>
+                </li>
+            `);
+            // parent.innerHTML += `
+            //     <li class='promo__interactive-item'>
+            //         ${key + 1}. ${film} 
+            //         <div class="delete"></div>
+            //     </li>
+            // `;
+        });
 
-// 2)
-genre.textContent = 'Драма';
+        parent.querySelectorAll('.delete').forEach((btn, i) => btn.addEventListener('click', event => {
+            films.splice(i, 1);
+            loadMovies(films, parent);
+        }));
+    }
+    
+    addBlock.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-// 3)
-poster.style.backgroundImage = "url('img/bg.jpg')";
+        let newFilm = addInput.value;
 
-// 4) и 5)
-moviesList.querySelectorAll('li').forEach(item => item.remove());
+        if (newFilm) {
+            newFilm = newFilm.substr(0, 1).toUpperCase() + newFilm.substr(1, newFilm.length);
+            
+            if (newFilm.length > 21) {
+                newFilm = `${newFilm.substr(0, 22)}...`;
+            }
 
-movieDB.movies.sort().forEach((film, key) => {
-    moviesList.insertAdjacentHTML('beforeend', `
-        <li class='promo__interactive-item'>
-            ${key + 1}. ${film} 
-            <div class="delete"></div>
-        </li>
-    `);
+            movieDB.movies.push(newFilm);
+
+            if (isFavorite.checked) {
+                console.log('Добавляем любимый фильм!');
+            }
+            sortArr(movieDB.movies);
+            loadMovies(movieDB.movies, moviesList);
+            event.target.reset();
+        }
+    });
+
+
+    deleteAdv(ad);
+    makeChanges();
+    sortArr(movieDB.movies);
+    loadMovies(movieDB.movies, moviesList);
 });
-
