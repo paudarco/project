@@ -1,40 +1,36 @@
 'use strict';
 
-// Получение всего тега html (т.е. всей страницы)
-console.log(document.documentElement);
+// touchstart срабатывает при касании по элементу
+// touchmove срабатывает при движении пальца по элементу
+// touchend срабатывает когда палец отрывается с элемента
+// touchenter срабатывает когда мы ведем пальцем по экрану и наскакиваем на нужный элемент
+// touchleave когда палец соскользнул с элемента дальше по экрану
+// touchcancel когда палец выйдет за пределы браузера
 
-// Обращение к head
-console.log(document.head);
+// вместо window можно использовать document
+window.addEventListener('DOMContentLoaded', () => {
+    const box = document.querySelector('div.box');
 
-// Получение всех дочерних элементов body
-console.log(document.body.childNodes);
+    box.addEventListener('touchstart', (e) => {
+        e.preventDefault();
 
-// Получение первого и последнего дочернего элемента
-console.log(document.body.firstChild);
-console.log(document.body.lastChild);
+        console.log('start');
+    });
 
-// Обращение к родителю. Чтобы пойти выше, просто допишем еще .parentNode
-console.log(document.querySelector('button').parentNode);
+    box.addEventListener('touchmove', (e) => {
+        e.preventDefault();
 
-// Обращение к элементу по его CSS-селектору атрибуту
-console.log(document.querySelector('[data-current="3"'));
+        console.log('moving...');
+    });
 
-// Получение предыдущего и следующего соседа
-console.log(document.querySelector('div').previousSibling);
-console.log(document.querySelector('div').nextSibling);
+    box.addEventListener('touchend', (e) => {
+        e.preventDefault();
 
-// Все эти команды получают именно узлы, а не элементы. 
-// Чтобы получить именно элемент, нужно дописать Element в одном месте 
-// или заменить Node на Element. Например:
-console.log(document.body.firstElementChild);
-console.log(document.querySelector('button').parentElement);
-console.log(document.querySelector('div').previousElementSibling);
+        console.log('ended');
+    });
+});
 
-// Но если мы хотим среди узлов найти элемент, можем проверить каждый узел на имя
-// Правда комментарии в этом примере не будут считаться текстовыми узлами
-for (let node of document.body.childNodes) {
-    if (node.nodeName == '#text') {
-        continue;
-    }
-    console.log(node);
-}
+// свойства события event для мобилок
+// touches выдает список всех пальцев на экране (event.touches)
+// targetTouches выдает список всех пальцев на элементе
+// changedTouches список пальцев участвующих в текущем событии
