@@ -23,6 +23,13 @@ console.log(now.getTime());
 console.log(now.setHours(18));
 console.log(now); // в консоли vscode время может перевестись в UTC, а в браузере норм
 
+
+// !!!ВАЖНО!!!
+// Если мы передаем в Date.parse() или new Date() дату в виде "March 7, 2014",
+// то возьмется местный часовой пояс. 
+// Если в виде "2014-03-07", то возьмется UTC
+
+
 let start = new Date();
 
 for (let i = 0; i < 100000; i++) {
