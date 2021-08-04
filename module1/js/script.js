@@ -1,57 +1,35 @@
 'use strict';
+// Без аргументов Date возвращает текущую дату и время
+// Можем засунуть строку (допустим '2017-05-31')
+// Можем засунуть дату аргументами(двумя, тремя и т д., допустим (2017, 4, 31)); при этом месяц считается с нуля
+// Если аргумент всего один, то он преобразовывается в кол-во миллисекунд (999999)
+// при этом отсчет начинается с 1 января 1970 года, и если нужна дата раньше, то пишем отрицательные (-99999)
 
-const btns = document.querySelectorAll('button'),
-      wrapper = document.querySelector('.btn-block');
+let now = new Date();
 
-// console.log(btns[0].classList.length); // длина псевдомассива с классами
-// console.log(btns[0].classList.item(0)); // получение класса по индексу из псевдомассива с классами
-// console.log(btns[0].classList.add('red', 'car')); // добавление нового класса элементу
-// console.log(btns[0].classList.remove('blue')); // удаление класса
-// console.log(btns[0].classList.toggle('blue')); // включает или выключает класс в зависимости от наличия или отсутстви
-// toggle тоже возвращает либо true либо False
+console.log(now.getFullYear());
+console.log(now.getMonth());
+console.log(now.getDate()); //текущее число в месяце
+console.log(now.getDay()); // какой по счету день недели, где воскресенье - день 0
+// То же самое для часов, минут, секунд и т д
 
-// btns[1].classList.toggle('red');
-// contains позволяет проверить на наличие класса и возвращает true или false
-// if (btns[1].classList.contains('red')) {
-//     console.log('red');
-// } else {
-//     console.log('no');
-// }
+// Можем получить разницу в минутах между настоящим часовым поясом и UTC
+console.log(now.getTimezoneOffset());
 
-// btns[0].addEventListener('click', () => {
-//     if (!btns[1].classList.contains('red')) {
-//         btns[1].classList.toggle('red');
-//     } else {
-//         btns[1].classList.toggle('red');
-//     }
-// });
+// Можем получить кол-во миллисекунд, прошедших с 1 января 1970
+console.log(now.getTime());
 
+// Чтобы установить время, мы везде где возможно get меняем на set
+console.log(now.setHours(18));
+console.log(now); // в консоли vscode время может перевестись в UTC, а в браузере норм
 
-// Делегирование - если элемент подходит под условие, то на нем сработает функция, которую мы передали
-// Мы делегируем событие с родителя на его потомков
-// Замена этому способу - привязка функции к каждому элементу родителя (что не всегда сработает)
-// обращаемся к родительскому элементу и отслеживаем событие клика
-// если цель клика - кнопка, то что-то делаем
-// event.target в начале прописываем, чтобы не рассматривать элементы без target
-wrapper.addEventListener('click', (event) => {
-    if (event.target && event.target.tagName == 'BUTTON') {
-        console.log('Hello!');
-    }
-});
-// Здесь можем заменить event.target.tagName на 
-event.target.mathes('button.red');
-// matches тоже возвращает bool
+let start = new Date();
 
+for (let i = 0; i < 100000; i++) {
+    let some = i ** 3; // возведение в степень
+}
 
-// При такой привязке события новые добавленные элементы обрабатывать события не будут
-// btns.forEach(btn, () => {
-//     btn.addEventListener('click', () => {
-//         console.log('Hello!');
-//     });
-// });
+let end = new Date();
 
+console.log(`Цикл отработал за ${end - start} миллисекунд`);
 
-// Даже создав новый элемент делегирование будет обрабатывать событие
-const btn = document.createElement('button');
-btn.classList.add('red');
-wrapper.append(btn);
