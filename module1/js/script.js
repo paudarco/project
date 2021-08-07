@@ -40,3 +40,10 @@ let end = new Date();
 
 console.log(`Цикл отработал за ${end - start} миллисекунд`);
 
+
+let date = new Date('2021-08-05T15:02:40.195Z');
+let date1 = Date.parse('2021-08-05T15:02:40.195Z');
+
+console.log(date);
+console.log(date1);
+
