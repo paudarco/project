@@ -1,5 +1,5 @@
-const menuTrigger = document.querySelector('.header__burger__menu');
-const headerMenu = document.querySelector('.header__menu');
+const menuTrigger = document.querySelector('.header-burger__menu');
+const headerMenu = document.querySelector('.header-menu');
 
 menuTrigger.addEventListener('click', (event) => {
     if (!menuTrigger.classList.contains('active')) {

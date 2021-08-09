@@ -191,7 +191,7 @@ const langButton = header.querySelectorAll('.rus');
 const changeLanguage = (lang) => {
     header.querySelector('.header__logo a span').textContent = lang['title'].slice(0, 3);
     header.querySelector('.header__logo a').lastChild.textContent = lang['title'].slice(3, lang['title'].length);
-    header.querySelectorAll('.header__list a').forEach((link, i) => {
+    header.querySelectorAll('.header-menu__list a').forEach((link, i) => {
         link.textContent = lang['header'][i];
     });
     langButton.forEach(item => {
