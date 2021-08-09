@@ -12,3 +12,5 @@ let someObj = {
 };
 
 console.log(someObj);
+
+console.log('text');
