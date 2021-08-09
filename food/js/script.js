@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showTabContent(i = 0) {
         tabsContent[i].classList.add('show', 'fade');
+        tabsContent[i].classList.remove('hide');
         tabs[i].classList.add('tabheader__item_active');
     }
 
@@ -49,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return {
             'total': t,
-            'days': days,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds
+            days,
+            hours,
+            minutes,
+            seconds
         };
     }
 
@@ -86,9 +87,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(timeInterval);
             }
         }
-
-        
     }
 
     setClock('.timer', deadline);
+
+    // Modal
+
+    const modalBtns = document.querySelectorAll('[data-modal]'),
+          modal = document.querySelector('.modal'),
+          modalCloseBtn = document.querySelector('[data-close]');
+
+    function showModal() {
+        modal.classList.toggle('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.toggle('show');
+        document.body.style.overflow = '';
+    }
+
+    modalBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            showModal();
+        });
+    });
+
+    modal.addEventListener('click', event => {
+        const target = event.target;
+        if (target === modal || target === modalCloseBtn) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.code == 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
 });
