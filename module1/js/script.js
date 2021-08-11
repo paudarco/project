@@ -1,36 +1,23 @@
 'use strict';
 
-class Rectangle {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
+const person = {
+    name: 'Alex',
+    tel: '+78273740127',
+    parents: {
+        mom: 'Olga',
+        dad: 'Kolya'
     }
+};
 
-    calcArea() {
-        return this.width * this.height;
-    }
-}
+// stringify - для отправки на сервер
+// parse - для выгрузки из сервера
 
-// extends обозначает суперкласс (на основе которого создается след класс)
-// Чтобы получить все аргументы класса-родителя, мы прописываем их в super
-// При этом методы тоже переносятся
-class ColoredRectangleWithText extends Rectangle {
-    constructor(width, height, text, bgColor) {
-        super(width, height);
-        this.text = text;
-        this.bgColor = bgColor;
-    }
+console.log(JSON.parse(JSON.stringify(person)));
 
-    showMyProps() {
-        console.log(`Цвет ${this.bgColor}, текст ${this.text}`);
-    }
-}
+// С помощью JSON можно создавать глубокие копии объектов
 
-const square = new Rectangle(10, 10);
-const long = new Rectangle(100, 20);
-const div = new ColoredRectangleWithText(25, 10, 'Hello world', 'red');
+const personCopy = JSON.parse(JSON.stringify(person));
+personCopy.parents.mom = 'Yulia';
 
-console.log(square.calcArea());
-console.log(long.calcArea());
-
-console.log(div.calcArea());
+console.log(personCopy);
+console.log(person);
