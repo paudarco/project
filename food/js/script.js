@@ -141,26 +141,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Food menu
     class FoodMenuItem {
-        constructor(src, alt, title, description, price) {
+        constructor(src, alt, title, description, price, ...classes) {
             this.src = `./img/tabs/${src}`;
             this.alt = alt;
             this.title = title;
             this.description = description;
             this.price = price;
+            this.classes = classes;
         }
 
         load(selector) {
-            // block.querySelector('img').setAttribute('alt', this.alt);
-            // block.querySelector('img').setAttribute('src', this.src);
-            // block.querySelector('.menu__item-subtitle').textContent = this.title;
-            // block.querySelector('.menu__item-descr').textContent = this.description;
-            // block.querySelector('.menu__item-total span').textContent = this.price;
-
             const parent = document.querySelector(selector);
             const element = document.createElement('div');
 
-            element.innerHTML = `<div class="menu__item">
-            <img src="${this.src}" alt="${this.alt}">
+            if (this.classes.length <=  0) {
+                element.classList.add('menu__item');
+            } else {
+                this.classes.forEach(className => element.classList.add(className));
+            }
+            
+            element.innerHTML = `
+                <img src="${this.src}" alt="${this.alt}">
                 <h3 class="menu__item-subtitle">Меню "${this.title}"</h3>
                 <div class="menu__item-descr">${this.description}</div>
                 <div class="menu__item-divider"></div>
@@ -168,27 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="menu__item-cost">Цена:</div>
                     <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
                 </div>
-            </div>`;
+            `;
 
             parent.append(element);
         }
     }
-
-    // const food1 = new FoodMenuItem(
-    //     'Фитнес', 
-    //     'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-    //     229
-    // );
-    // const food2 = new FoodMenuItem(
-    //     'Премиум', 
-    //     'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-    //     550
-    // );
-    // const food3 = new FoodMenuItem(
-    //     'Постное',
-    //     'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-    //     430
-    // );
 
     const foodItems = [
         new FoodMenuItem(
@@ -196,21 +181,24 @@ document.addEventListener('DOMContentLoaded', () => {
             'vegy',
             'Фитнес', 
             'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-            229
+            229,
+            "menu__item"
         ),
         new FoodMenuItem(
             'elite.jpg',
             'elite',
             'Премиум', 
             'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-            550
+            550,
+            "menu__item"
         ),
         new FoodMenuItem(
             'post.jpg',
             'post',
             'Постное',
             'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-            430
+            430,
+            "menu__item"
         )
     ];
 
