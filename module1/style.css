@@ -14,3 +14,12 @@ button {
   margin: 0 auto;
   margin-top: 20px; 
 }
+
+
+.triangle {
+  display: block;
+width: 15px;
+height: 6px;
+background: #202024;
+transform: matrix(1, 0, 0, -1, 0, 0);
+}
