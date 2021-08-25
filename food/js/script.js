@@ -206,4 +206,65 @@ document.addEventListener('DOMContentLoaded', () => {
         item.load('.menu .container');
     });
     
+    // Forms
+
+    const forms = document.querySelectorAll('form');
+
+    const message = {
+        loading: 'Загрузка',
+        success: 'Спасибо! Скоро мы с вами свяжемся :)',
+        failure: 'Что-то пошло не так :('
+    };
+
+    forms.forEach(form => {
+        postData(form);
+    });
+
+    function postData(form) {
+        form.addEventListener('submit', (event) => {
+            // Чтобы отправка формы не перезагружала страницу
+            event.preventDefault();
+
+            const statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.textContent = message.loading;
+            form.append(statusMessage);
+            
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+
+            // Согласно документации, при работе с формами нужно указать значение 'multipart/form-data'
+            // НО!!! При использовании XMLHttpRequest + FormData заголовок устанавливать не нужно,
+            // т.к. он устанавливается автоматически
+            // поэтому на сервере не получено никаких данных и можно эту строку не использовать
+            // request.setRequestHeader('Content-type', 'multipart/form-data');
+            // НО!!! если мы работем с JSON, заголовок нужен
+            request.setRequestHeader('Content-type', 'application/json');
+            const formData = new FormData(form);
+
+            let obj = {};
+            formData.forEach((value, key) => {
+                obj[key] = value;
+            });
+
+            const json = JSON.stringify(obj);
+
+            // Если POST, то указываем объект для отправки
+            // request.send(formData);
+            request.send(json);
+
+            request.addEventListener('load', () => {
+                if (request.status === 200) {
+                    console.log(request.response);
+                    form.reset();
+                    statusMessage.textContent = message.success;
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 3000);
+                } else {
+                    statusMessage.textContent = message.failure;
+                }
+            });
+        });
+    }
 });
