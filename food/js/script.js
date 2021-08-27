@@ -231,39 +231,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 margin: 0 auto;
             `;
             form.insertAdjacentElement('afterend', statusMessage);
-            
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
 
-            // Согласно документации, при работе с формами нужно указать значение 'multipart/form-data'
-            // НО!!! При использовании XMLHttpRequest + FormData заголовок устанавливать не нужно,
-            // т.к. он устанавливается автоматически
-            // поэтому на сервере не получено никаких данных и можно эту строку не использовать
-            // request.setRequestHeader('Content-type', 'multipart/form-data');
-            // НО!!! если мы работем с JSON, заголовок нужен
-            request.setRequestHeader('Content-type', 'application/json');
             const formData = new FormData(form);
+
+            // Если мы работаем с xml, нам не обязательно создавать obj
+            // достаточто просто передать formData в body для fetch
 
             let obj = {};
             formData.forEach((value, key) => {
                 obj[key] = value;
             });
-
-            const json = JSON.stringify(obj);
-
-            // Если POST, то указываем объект для отправки
-            // request.send(formData);
-            request.send(json);
-
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
-                    form.reset();
-                    showThanksModal(message.success);
-                    statusMessage.remove();
-                } else {
-                    showThanksModal(message.failure);
-                }
+            
+            fetch('server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+            .then(data => data.text())
+            .then(data => {
+                console.log(data);
+                showThanksModal(message.success);
+                statusMessage.remove();
+            }).catch(() => {
+                showThanksModal(message.failure);
+            }).finally(() => {
+                form.reset();
             });
         });
     }
@@ -292,5 +286,20 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }, 4000);
     }
+
+    // Fetch использует промисы
+    // Чтобы преобразовать ответ в json, в fetch есть готовый метод response.json()
+    // Чтобы в xml, есть метод response.text()
+    // Если нам нужно получить данные, то хватит и одного аргумента с юрл 
+    // Если post, то вторым аргументом идет настройка запроса
     
+    // fetch('https://jsonplaceholder.typicode.com/posts', {
+    //     method: 'POST',
+    //     body: JSON.stringify({name: 'Alex'}),
+    //     headers: {
+    //         'Content-type': 'application/json'
+    //     }
+    // })
+    //     .then(response => response.json())
+    //     .then(json => console.log(json));
 });
