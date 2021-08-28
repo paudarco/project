@@ -1,95 +1,80 @@
 'use strict';
 
-// console.log('Запрос данных...');
+// filter и map возвращают новый массив, когда forEach не возвращает
 
+// filter фильтрует по условию
 
-// Promise - это специальный объект, который связывает "создающий" и "потребляющий" код
-// Функция внутри промиса при создании называется исполнитель (executor)
-// Промис может находиться в трех состояниях:
-// -ожидание (pending)
-// -исполнено (fulfilled)
-// -отклонено (rejected)
+const names = ['Ivan', 'Anna', 'Ksenya', 'Voldemart'];
 
-// Resolve нужен для кода без ошибок, reject - На случай ошибки
-// resolve вызывается через then, а reject - через catch (добавляется куда)
-// finally выведется при любом исходе
-// resolve и reject могут принимать в себя только один аргумент (или ноль)
-
-
-// const req = new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//         console.log('Подготовка данных...');
-
-//         const product = {
-//             name: 'TV',
-//             price: 2000
-//         };
-
-//         resolve(product);
-//     },2000);
+const shortNames = names.filter(name => name.length < 5);
+// то же самое, что и 
+// name.filter(name => {
+//     if (name.length < 5) {
+//         return name;
+//     }
+// });
+// или 
+// name.filter(name => {
+//     return name.length < 5;
 // });
 
-
-// then может принимать в себя две функции: одну - для resolve, вторую - для reject
-// при этом вид будет такой: req.then(result => console.log(result), error => console.error(error))
-// если указана одна - это для resolve
-
-// catch принимает в себя только функцию с ошибкой error,
-// так что then(null => {}, error => {}) то же самое, что и catch(error => {})
-
-// finally сработает в любом случае
-// но он не имеет аргументов, и предназначен для выполнения каких-то общих действий
-// он пропускает результат или ошибку дальше, к последующим обработчикам
-
-// req.then((product) => {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             product.status = 'order';
-
-//             reject();
-//         }, 2000);
-//     });
-// }).then((data) => {
-//     data.modify = true;
-//     return data;
-// }).then(data => {
-//     console.log(data);
-// }).catch(() => {
-//     console.error('Произошла ошибка');
-// }).finally(() => {
-//     console.log('finally');
-// });
+console.log(shortNames);
 
 
-const test = time => {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(), time);
-    });
-}
+// map изменяет каждый элемент массива
 
-// test(1000).then(() => console.log('1000 ms'));
-// test(2000).then(() => console.log('2000 ms'));
+const answers = ['IvAn', 'AnnA', 'Hello'];
 
-// Promise.all принимает в себя массив с промисами
-// он ждет выполнения всех промисов в массиве и только потом выполняет then
-// но если хотя бы один промис отклонен, all тоже не выполнится
-// аналог - allSettled (который вернет массив с результатами всех промиссов и выполнится в любом случае)
-// так что можем заменить им 48 и 49 строки
+const result = answers.map(item => item.toLowerCase());
 
-// Promise.all([test(1000), test(2000)]).then(() => {
-//     console.log('All');
-// });
-
-// race (гонка) выполняет then когда хотя бы один промис отработал
-Promise.race([test(1000), test(2000)]).then(() => {
-    console.log('All');
-});
+console.log(result);
 
 
+// every/some возвращают true или false
+// они проверяют массив на условие
+// при every все элементы должны подходить под условие
+// при some - хотя бы один
 
-const req = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        console.log('1 этап');
+const arr = [9, 'jkh', 'sdfjfgha'];
 
-    },2000);
-});
+console.log(arr.some(item => typeof(item) === 'number'));
+console.log(arr.every(item => typeof(item) === 'number'));
+
+
+// reduce
+// используется для группировки массива
+
+const numbers = [1, 2, 3, 4, 10, 1, 6,];
+
+// принимает коллбек с двумя аргументами:
+// первый - для результата (аккумулятор) (изначально равно первому элементу, 
+// но мы можем задать его начальное значение вторым аргументом после коллбека)
+// второй - элемент массива (если не задано начальное значение аккумулятора, 
+// в первой итерации второй аргумент - второй элемент массива)
+// коллбек возвращает новое значение sum после каждого элемента и итерации
+
+const sumOfNums = numbers.reduce((sum, number) => sum + number, 3);
+console.log(sumOfNums);
+
+const words = ['apple', 'pear', 'plum'];
+
+// причем если не задано начальное значение аккумулятора, вторым аргументом после колллбека в первой итерации 
+// на место аккумулятора подставляется первый элемент, а на word - второй
+// поэтому в начале нет запятой
+const allWords = words.reduce((sum, word) => `${sum}, ${word}`);
+console.log(allWords);
+
+
+const obj = {
+    ivan: 'person',
+    anna: 'person',
+    dog: 'animal',
+    cat: 'animal'
+};
+// Entries позволяет преобразовать объект в многомерный массив
+const newArr = Object.entries(obj)
+.filter(item => item[1] === 'person')
+.map(item => item[0]);
+
+
+console.log(newArr);
