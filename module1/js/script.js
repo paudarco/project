@@ -1,80 +1,54 @@
 'use strict';
 
-// filter и map возвращают новый массив, когда forEach не возвращает
+// В регулярных выражения есть шаблоны (pattern) и флаги (flags)
+// Для регулярных выражений есть 2 типа использования
 
-// filter фильтрует по условию
+// Шаблон - то, что мы ищем в строке
+// Флаг - настройка выражения 
+// Есть 3 основных флага:
+// i - поиск вне зависимости от регистра
+// g - поиск нескольких вложений
+// m - многострочный режим
+// и их можно комбинировать (gim, igm и т д как угодно)
 
-const names = ['Ivan', 'Anna', 'Ksenya', 'Voldemart'];
+// 1) Классический синтаксис, которым никто не пользуется
+// new RegExp('pattert', 'flags');
 
-const shortNames = names.filter(name => name.length < 5);
-// то же самое, что и 
-// name.filter(name => {
-//     if (name.length < 5) {
-//         return name;
-//     }
-// });
-// или 
-// name.filter(name => {
-//     return name.length < 5;
-// });
+// 2)
+// /pattern/flags
 
-console.log(shortNames);
+const ans = prompt('Введите ваше имя:');
 
+const reg = /n/ig;
 
-// map изменяет каждый элемент массива
+// Также существуют символьные класса, обобщающие некоторые типы символов
+// \d - цифры (digits)
+// \w - слова (words)
+// \s - пробелы (spaces)
 
-const answers = ['IvAn', 'AnnA', 'Hello'];
+const reg2 = /\d/g;
+console.log(ans.match(reg2));
 
-const result = answers.map(item => item.toLowerCase());
+// Если мы хотим игнорировать все буквы или цифры и т д, то пишем класс с большой буквы
+// \D \W \S
 
-console.log(result);
+const string = 'my name is R2D2';
 
+// Можем комбинировать классы. В этом случае мы ищем сочетание буква-цифра-буква-цифра
+console.log(string.match(/\w\d\w\d/i));
 
-// every/some возвращают true или false
-// они проверяют массив на условие
-// при every все элементы должны подходить под условие
-// при some - хотя бы один
+// Можно проверить наличие паттерна в строке с помощью метода регулярного выражения test (вернет boolean)
+// console.log(reg.test(ans));
 
-const arr = [9, 'jkh', 'sdfjfgha'];
+// search выполняет поиск сопоставления между регулярным выражением и строкой, возвращает индекс первого вхождения
+// console.log(ans.search(reg));
 
-console.log(arr.some(item => typeof(item) === 'number'));
-console.log(arr.every(item => typeof(item) === 'number'));
+// match возвращает все вхождения
+// console.log(ans.match(reg));
 
+// const password = prompt('Введите пароль:');
 
-// reduce
-// используется для группировки массива
-
-const numbers = [1, 2, 3, 4, 10, 1, 6,];
-
-// принимает коллбек с двумя аргументами:
-// первый - для результата (аккумулятор) (изначально равно первому элементу, 
-// но мы можем задать его начальное значение вторым аргументом после коллбека)
-// второй - элемент массива (если не задано начальное значение аккумулятора, 
-// в первой итерации второй аргумент - второй элемент массива)
-// коллбек возвращает новое значение sum после каждого элемента и итерации
-
-const sumOfNums = numbers.reduce((sum, number) => sum + number, 3);
-console.log(sumOfNums);
-
-const words = ['apple', 'pear', 'plum'];
-
-// причем если не задано начальное значение аккумулятора, вторым аргументом после колллбека в первой итерации 
-// на место аккумулятора подставляется первый элемент, а на word - второй
-// поэтому в начале нет запятой
-const allWords = words.reduce((sum, word) => `${sum}, ${word}`);
-console.log(allWords);
-
-
-const obj = {
-    ivan: 'person',
-    anna: 'person',
-    dog: 'animal',
-    cat: 'animal'
-};
-// Entries позволяет преобразовать объект в многомерный массив
-const newArr = Object.entries(obj)
-.filter(item => item[1] === 'person')
-.map(item => item[0]);
-
-
-console.log(newArr);
+// Одинокая точка в паттерне селектора выбирает абсолютно все символы в строке
+// чтобы выбрать конкретно точку, нужно экранировать символ с помощью обратного слеша \.
+// replace заменяет искомую подстроку из первого аргумента на второй аргумент
+// console.log(password.replace(/\./g, '*'));
